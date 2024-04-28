@@ -130,11 +130,19 @@ tar --version
 ```bash
 tar -xf echo-web-v2.tar.gz 
 ```
+- verificar archivos que de descomprimieron 
+```bash
+cd  echo-web-v2
+ls
+# Dockerfile  main.go  manifests  README.md
+```
 
 - Crear imagen docker verificar imagen y subir imagen
 
 ## Task 2. Push the image to the Container Registry
 ```bash
+# el punto "." al final de la primera linea indica el directorio actual
+# suponemos que estamos parados dentro del directorio echo-web-v2 
 docker build -t gcr.io/{my-project-id}/echo-app:v2 .
 docker images
 gcloud auth configure-docker
