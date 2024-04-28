@@ -59,7 +59,7 @@ gcloud container clusters get-credentials echo-cluster --zone=europe-west4-a
 - Verificar donde esta el config
 
 ```bash
-/home/student_00_eb454a988c14/.kube
+cd /home/student_00_eb454a988c14/.kube
 ls
 more config
 ```
@@ -102,7 +102,7 @@ kubectl expose deployment echo-web --type=LoadBalancer --port 80 --target-port 8
 ```
 
 - Verificar que el puerto funcione
-  - Ir a cluster, workload, Exposing services
+  - Ir a: cluster, workload, Exposing services
 
 
 ## Task 1. Build and deploy the updated application with a new tag
@@ -141,13 +141,17 @@ ls
 
 ## Task 2. Push the image to the Container Registry
 ```bash
-# el punto "." al final de la primera linea indica el directorio actual
-# suponemos que estamos parados dentro del directorio echo-web-v2 
+# El punto "." al final de la primera linea indica el directorio actual
+# Suponemos que estamos parados dentro del directorio echo-web-v2 
 docker build -t gcr.io/{my-project-id}/echo-app:v2 .
+# Verificar que la imagen se creo correctamente
 docker images
+# Autenticarse en el registry de google
 gcloud auth configure-docker
+# Subir la imagen
 docker push gcr.io/{my-project-id}/quickstart-image
 ```
+
 
 ## Task 3. Deploy the updated application to the Kubernetes cluster
 ```bash
@@ -178,12 +182,12 @@ gcloud storage cp gs://qwiklabs-gcp-03-eb542aca2b0f/resources-install-web.sh .
 ```
 ## 2. Task 2. Create a VM instance with a remote startup script
 
-Dentro del wizard de creación de la instancia
+Dentro del wizard de creación de la instancia ir a:
 - Avanzado
   - Management
     - Labels
       - startup-script-url
-        - Pegar url del bucket de gs://
+        - Pegar url del bucket de `gs://`
 
 
 > Revisar el código que crea la instancia en la barra lateral derecha
@@ -194,7 +198,7 @@ Dentro del wizard de creación de la instancia
     - Ir a la instancia creada
     - Modificar
     - Agregar http como regla de entrada / solo http 
-> Revisar el network de la instancia
+> Revisar la configuración de network de la instancia
 
 ## 4. Task 4. Test that the VM is serving web content
     - Ver la ip publica que crea para el laboratorio
@@ -209,6 +213,17 @@ Dentro del wizard de creación de la instancia
 - Startup Script : https://cloud.google.com/compute/docs/instances/startup-scripts/linux?hl=es-419
 
 
+# ANEXO
 
+Conceptos que usamos o estudiamos en los laboratorios:
+
+- Modelo OSI de referencia o modelo TCP/IP
+    - REF: https://www.cloudflare.com/es-es/learning/ddos/glossary/open-systems-interconnection-model-osi/
+
+- Distribuciones Linux:
+    - https://upload.wikimedia.org/wikipedia/commons/1/1b/Linux_Distribution_Timeline.svg
+
+- Arquitectura Kubernetes:
+    - https://kubernetes.io/es/docs/concepts/architecture/
 
 
