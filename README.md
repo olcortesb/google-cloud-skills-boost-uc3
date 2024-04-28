@@ -1,6 +1,6 @@
 # Notas evento BAUC3M & Google and Partners
 
-A continuacion notas que compartimos con los estudiantes en el transcurso del evento, estan divididos por cada laboratorio que trabajamos.
+A continuación notas que compartimos con los estudiantes en el transcurso del evento, están divididos por cada laboratorio que trabajamos.
 
 # LAB 1: Deploy and Troubleshoot a Website: Challenge Lab
 
@@ -8,26 +8,26 @@ A continuacion notas que compartimos con los estudiantes en el transcurso del ev
 ## 1. Task 1. Create a storage bucket
    - Crear buckets
 ```bash
-# Los podemos crear tambien desde la terminal
+# Los podemos crear también desde la terminal
 gcloud storage buckets create gs://BUCKET_NAME --location=BUCKET_LOCATION
 ```
 Una ves creado
 ```bash
-#Copiar un objeto de google Storage con la terminal:
+# Copiar un objeto de google Storage con la terminal:
 gcloud storage cp gs://qwiklabs-gcp-03-eb542aca2b0f/resources-install-web.sh .
     
 ```
 ## 2. Task 2. Create a VM instance with a remote startup script
 
-Dentro del wizard de creacion de la instancia
+Dentro del wizard de creación de la instancia
 - Avanzado
-  - Managment
+  - Management
     - Labels
       - startup-script-url
-        - Pegar url del buket de gs://
+        - Pegar url del bucket de gs://
 
 
-> Revisar el codigo que crea la instancia en la barra lateral derecha
+> Revisar el código que crea la instancia en la barra lateral derecha
 >  - https://cloud.google.com/compute/docs/instances/startup-scripts/linux?hl=es-419 
 >  - Los tipos de metadata: https://cloud.google.com/compute/docs/instances/st>artup-scripts/linux?hl=es-419
 
@@ -36,12 +36,15 @@ Dentro del wizard de creacion de la instancia
     - Ir a la instancia creada
     - Modificar
     - Agregar http como regla de entrada / solo http 
+
 > Revisar el network de la instancia
 
 ## 4. Task 4. Test that the VM is serving web content
-    - Ver la ip publica que crea para el laboratior
+    - Ver la ip publica que crea para el laboratorio
 
 # LAB 2: Scale Out and Update a Containerized Application on a Kubernetes Cluster
+
+### Pasos previos:
 
 - Validar que existe el cluster
 - Validar que existe el bucket y el objeto
@@ -79,7 +82,7 @@ kubectl get pods -n kube-system
 ```bash
 # Verificar que deployment tengo
 kubectl get deployment
-# Editar deploymnet
+# Editar deployment
 kubectl edit deployment/echo-web
 ```
 
@@ -152,9 +155,7 @@ kubectl scale deployment echo-web --replicas=2
 
 ## Task 5. Confirm the application is running
 
-- Verificar que esta ejecutandoce la version 2
-
-![clipboard.png](inkdrop://file:RnN2Ovmn7)
+- Verificar que esta ejecutándose la version 2
 
 # LAB 3: 2. Deploy a Compute Instance with a Remote Startup Script
 
@@ -177,10 +178,9 @@ Dentro del wizard de creación de la instancia
         - Pegar url del bucket de gs://
 
 
-> Revisar el codigo que crea la instancia en la barra lateral derecha
+> Revisar el código que crea la instancia en la barra lateral derecha
 >  - https://cloud.google.com/compute/docs/instances/startup-scripts/linux?hl=es-419 
->  - Los tipos de metadata: https://cloud.google.com/compute/docs/instances/st>artup-scripts/linux?hl=es-419
-
+>  - https://cloud.google.com/compute/docs/instances/st>artup-scripts/linux?hl=es-419
 
 ## 3. Task 3. Create a firewall rule to allow traffic (80/tcp)
     - Ir a la instancia creada
@@ -198,8 +198,6 @@ Dentro del wizard de creación de la instancia
 - https://cloud.google.com/container-registry/docs/advanced-authentication?hl=es-419#gcloud-helper
 - https://cloud.google.com/kubernetes-engine/docs/how-to/scaling-apps?hl=es-419#:~:text=To%20use%20kubectl%20scale%20%2C%20you,See%20more%20code%20actions. 
 - kubectl: [The Essential Kubectl Commands: Handy Cheat Sheet](https://www.atatus.com/blog/essential-kubectl-commands/#kubectl-apply)
-- Startup Script : https://cloud.google.com/compute/docs/instances/startup-scripts/linux?hl=es-419
-- https://cloud.google.com/storage/docs/downloading-objects?hl=es-419#cli-download-object-portion
 - Startup Script : https://cloud.google.com/compute/docs/instances/startup-scripts/linux?hl=es-419
 
 
