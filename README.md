@@ -1,46 +1,58 @@
 # Notas evento BAUC3M & Google and Partners
 
-A continuación notas que compartimos con los estudiantes en el transcurso del evento, están divididos por cada laboratorio que trabajamos.
+A continuación notas que compartí con los estudiantes en el transcurso del evento, están divididos por cada laboratorio que trabajamos.
 
-# LAB 1: Deploy and Troubleshoot a Website: Challenge Lab
+## Task 1. Create a Linux VM instance
+- Crear VM instance
+  - Console / searchs / VM
 
+> ver el codigo al crear la instancia
 
-## 1. Task 1. Create a storage bucket
-   - Crear buckets
 ```bash
-# Los podemos crear también desde la terminal
-gcloud storage buckets create gs://BUCKET_NAME --location=BUCKET_LOCATION
+# Codigo para lanzar la isntancia con el comando de gcloud
+gcloud compute instances create VM_NAME \
+  --image-project=debian-cloud \
+  --image-family=debian-10 \
+  --metadata=startup-script='#! /bin/bash
+  apt update
+  apt -y install apache2
+  cat <<EOF > /var/www/html/index.html
+  <html><body><p>Linux startup script added directly.</p></body></html>
+  EOF'
 ```
-Una ves creado
+> Verificar la version de linux para que los comandos de `apt-get` que se van a ejecutar despues funcionen correctamente
+
+## Task 2. Enable public access to VM instance
+- Habilitar HTTP
+  - Network / firewall
+
 ```bash
-# Copiar un objeto de google Storage con la terminal:
-gcloud storage cp gs://qwiklabs-gcp-03-eb542aca2b0f/resources-install-web.sh .
-    
+# Revisar el estado de los servicios que tenemos levantados
+cat /etc/services
+grep -w '80/tcp' /etc/services
+grep -w '443/tcp' /etc/services
+grep -E -w '22/(tcp|udp)' /etc/services
+
 ```
-## 2. Task 2. Create a VM instance with a remote startup script
+## Task 3. Running a basic Apache Web Server
+- conectarse por `ssh` a la instancia ( dentro de la misma consola de google cloud)
 
-Dentro del wizard de creación de la instancia
-- Avanzado
-  - Management
-    - Labels
-      - startup-script-url
-        - Pegar url del bucket de gs://
+```bash
+#!/bin/bash
+apt-get update
+apt-get install -y apache2
+```
 
+```bash
+# Verificar que el apache esta instalado 
+dpkg -l | grep apache
+```
 
-> Revisar el código que crea la instancia en la barra lateral derecha
->  - https://cloud.google.com/compute/docs/instances/startup-scripts/linux?hl=es-419 
->  - Los tipos de metadata: https://cloud.google.com/compute/docs/instances/st>artup-scripts/linux?hl=es-419
+```bash
+# un curl de prueba para ver nuestra ip publica
+curl ipv4.icanhazip.com
 
-
-## 3. Task 3. Create a firewall rule to allow traffic (80/tcp)
-    - Ir a la instancia creada
-    - Modificar
-    - Agregar http como regla de entrada / solo http 
-
-> Revisar el network de la instancia
-
-## 4. Task 4. Test that the VM is serving web content
-    - Ver la ip publica que crea para el laboratorio
+```
 
 # LAB 2: Scale Out and Update a Containerized Application on a Kubernetes Cluster
 
@@ -169,17 +181,23 @@ kubectl scale deployment echo-web --replicas=2
 
 - Verificar que esta ejecutándose la version 2
 
-# LAB 3: 2. Deploy a Compute Instance with a Remote Startup Script
+# LAB 3: Deploy a Compute Instance with a Remote Startup Script
 
 
 ## 1. Task 1. Create a storage bucket
    - Crear buckets
+  ```bash
+  # Los podemos crear también desde la terminal
+  gcloud storage buckets create gs://BUCKET_NAME --location=BUCKET_LOCATION
+  ```
+  - Una ves creado:
+  ```bash
+  # Copiar un objeto de google Storage con la terminal:
+  gcloud storage cp gs://qwiklabs-gcp-03-eb542aca2b0f/resources-install-web.sh .
+      
+  ```
 
-Revisar el google Storage con la terminal:
-```bash
-gcloud storage cp gs://qwiklabs-gcp-03-eb542aca2b0f/resources-install-web.sh .
-# Ref: https://cloud.google.com/storage/docs/downloading-objects?hl=es-419#cli-download-object-portion
-```
+
 ## 2. Task 2. Create a VM instance with a remote startup script
 
 Dentro del wizard de creación de la instancia ir a:
@@ -195,13 +213,13 @@ Dentro del wizard de creación de la instancia ir a:
 >  - https://cloud.google.com/compute/docs/instances/st>artup-scripts/linux?hl=es-419
 
 ## 3. Task 3. Create a firewall rule to allow traffic (80/tcp)
-    - Ir a la instancia creada
-    - Modificar
-    - Agregar http como regla de entrada / solo http 
+   - Ir a la instancia creada
+   - Modificar
+   - Agregar http como regla de entrada / solo http 
 > Revisar la configuración de network de la instancia
 
 ## 4. Task 4. Test that the VM is serving web content
-    - Ver la ip publica que crea para el laboratorio
+  - Ver la ip publica que crea para el laboratorio
 
 # References:
 - https://kubernetes.io/docs/home/
